@@ -30,11 +30,21 @@ public class TestController {
         return stringRedisTemplate.opsForValue().increment("key", 1);
     }
 
-    @RequestMapping(value = "/sql", method = RequestMethod.GET)
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
     public List<User> testSql() {
         Condition condition = new Condition(User.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("state", 1);
         return userMapper.selectByCondition(condition);
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public User testSql2() {
+        User user = new User();
+        user.setState(1);
+        user.setPassword("aaaa");
+        user.setUsername("qeqqq");
+        userMapper.insert(user);
+        return user;
     }
 }
