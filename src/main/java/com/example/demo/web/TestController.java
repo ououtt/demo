@@ -2,6 +2,8 @@ package com.example.demo.web;
 
 import com.example.demo.repository.mapper.UserMapper;
 import com.example.demo.repository.orm.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.util.List;
  **/
 @RestController
 public class TestController {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
@@ -40,6 +43,10 @@ public class TestController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public User testSql2() {
+        logger.debug("-------------debug");
+        logger.info("-------------info");
+        logger.warn("-------------warn");
+        logger.error("--------------error");
         User user = new User();
         user.setState(1);
         user.setPassword("aaaa");
