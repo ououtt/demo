@@ -71,6 +71,11 @@ public class User {
     private Date gmtUpdate;
 
     /**
+     * 是否验证
+     */
+    private Integer valid;
+
+    /**
      * @return id
      */
     public Integer getId() {
@@ -294,5 +299,23 @@ public class User {
      */
     public void setGmtUpdate(Date gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
+    }
+
+    /**
+     * 获取是否验证
+     *
+     * @return valid - 是否验证
+     */
+    public Integer getValid() {
+        return valid;
+    }
+
+    /**
+     * 设置是否验证
+     *
+     * @param valid 是否验证
+     */
+    public void setValid(Integer valid) {
+        this.valid = valid;
     }
 }
