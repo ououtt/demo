@@ -8,12 +8,8 @@ import com.example.demo.factory.RoleFactory;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,9 +22,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleFactory roleFactory;
@@ -45,18 +38,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDO loadUserByUsername(String username) {
         UserDO userDO = userRepository.findUserDOByUsername(username);
-        if (userDO == null) {
-            throw new UsernameNotFoundException("");
-        }
+
         return userDO;
     }
 
     @Override
     public int createComonUser(UserDO userDO) {
         userDO.setRoles(COMMON_USER_ROLE);
-        userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
         return userRepository.createUser(userDO);
     }
 

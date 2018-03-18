@@ -1,13 +1,9 @@
 package com.example.demo.domain.entity;
 
-import com.example.demo.constant.enums.SexEnum;
 import com.example.demo.domain.value.RoleValue;
-import com.example.demo.repository.orm.Role;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +12,9 @@ import java.util.List;
  * @create 2018-03-17 18:50
  **/
 @Data
-public class UserDO implements UserDetails {
+public class UserDO implements Serializable{
 
+    private static final long serialVersionUID = 9149804964192890060L;
     private Integer id;
 
     private String username;
@@ -45,29 +42,4 @@ public class UserDO implements UserDetails {
     private Integer valid;
 
     private List<RoleValue> roles;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
