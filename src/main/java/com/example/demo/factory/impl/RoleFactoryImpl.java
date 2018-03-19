@@ -1,6 +1,6 @@
 package com.example.demo.factory.impl;
 
-import com.example.demo.constant.StateConstant;
+import com.example.demo.constant.Constant;
 import com.example.demo.constant.enums.UserRoleEnum;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.domain.value.RoleValue;
@@ -69,7 +69,7 @@ public class RoleFactoryImpl implements RoleFactory {
         RoleValue roleValue = new RoleValue();
         roleValue.setId(roleId);
         roleValue.setRoleName(userRoleEnum.getRoleName());
-        roleValue.setState(StateConstant.VALID);
+        roleValue.setState(Constant.VALID);
         return roleValue;
     }
 

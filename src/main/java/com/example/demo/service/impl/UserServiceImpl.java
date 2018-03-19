@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.constant.StateConstant;
+import com.example.demo.constant.Constant;
 import com.example.demo.constant.enums.UserRoleEnum;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.domain.value.RoleValue;
@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService {
         UserRoleEnum comon = UserRoleEnum.COMMON_USER;
         roleValue.setId(comon.getId());
         roleValue.setRoleName(comon.getRoleName());
-        roleValue.setState(StateConstant.VALID);
+        roleValue.setState(Constant.VALID);
         COMMON_USER_ROLE = Collections.singletonList(roleValue);
     }
 

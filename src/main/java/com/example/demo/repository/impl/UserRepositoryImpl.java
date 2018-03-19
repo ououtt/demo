@@ -1,7 +1,6 @@
 package com.example.demo.repository.impl;
 
-import com.example.demo.constant.StateConstant;
-import com.example.demo.constant.ValidConstant;
+import com.example.demo.constant.Constant;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.factory.RoleFactory;
 import com.example.demo.factory.UserFactory;
@@ -70,7 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDO findUserDOByUsername(String username) {
         Condition userCondition = new Condition(User.class);
         Example.Criteria criteria = userCondition.createCriteria();
-        criteria.andEqualTo("state", StateConstant.VALID);
+        criteria.andEqualTo("state", Constant.VALID);
         criteria.andEqualTo("username", username);
         List<User> users = userMapper.selectByCondition(userCondition);
         User user = users.get(0);
@@ -83,7 +82,7 @@ public class UserRepositoryImpl implements UserRepository {
         List<Integer> roleIds = userRoleRelations.stream().map(UserRoleRelation::getRoleId).collect(Collectors.toList());
         Condition condition2 = new Condition(Role.class);
         Example.Criteria criteria2 = condition2.createCriteria();
-        criteria2.andEqualTo("state", StateConstant.VALID);
+        criteria2.andEqualTo("state", Constant.VALID);
         criteria2.andIn("id", roleIds);
         List<Role> roles = roleMapper.selectByCondition(condition2);
 
@@ -96,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
         Date now = new Date();
         user.setGmtUpdate(now);
         user.setGmtCreate(now);
-        user.setState(StateConstant.VALID);
-        user.setValid(ValidConstant.VALID);
+        user.setState(Constant.VALID);
+        user.setValid(Constant.VALID);
     }
 }
