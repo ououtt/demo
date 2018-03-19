@@ -1,5 +1,6 @@
 package com.example.demo.web;
 
+import com.example.demo.constant.RedisKeyConstant;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.service.UserService;
 import com.example.demo.web.dto.UserCreateDTO;
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +31,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Result<UserDO> register(UserCreateDTO userCreateDTO, HttpServletRequest request) {
+    public Result<Boolean> register(UserCreateDTO userCreateDTO, HttpServletRequest request) {
         if (userCreateDTO == null || !userCreateDTO.check()) {
             logger.error("register 入参失败");
             return Result.errorResult("缺少注册必传参数!");
@@ -44,10 +50,15 @@ public class UserController {
             return Result.errorResult("验证码错误");
         }
 
+//        try {
+//            String registerKey = RedisKeyConstant.REGITER_KEY + userCreateDTO.getUsername();
+//            Long registerCount = stringRedisTemplate.opsForValue().increment(registerKey, 1);
+//        }
+
         UserDO userDO = wrapUserCreateDTO(userCreateDTO);
-        int userId = userService.createComonUser(userDO);
+        int userId = userService.createCommonUser(userDO);
         userDO.setId(userId);
-        return Result.successResult(userDO);
+        return Result.successResult(true);
     }
 
 

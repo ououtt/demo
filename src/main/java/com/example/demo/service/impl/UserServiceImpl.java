@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDO userDO = userRepository.findUserDOByUsername(username);
         if (userDO == null) {
-            throw new UsernameNotFoundException("");
+            throw new UsernameNotFoundException("用户名不存在");
         }
         return userDO;
     }
 
     @Override
-    public int createComonUser(UserDO userDO) {
+    public int createCommonUser(UserDO userDO) {
         userDO.setRoles(COMMON_USER_ROLE);
         userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
         return userRepository.createUser(userDO);

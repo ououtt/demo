@@ -16,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
@@ -48,6 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
     private RoleMapper roleMapper;
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int createUser(UserDO userDO) {
         User user = userFactory.convertToOrm(userDO);
 
@@ -56,6 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
         int effectCount = userMapper.insertSelective(user);
         if (effectCount != 1) {
             logger.error("创建用户插入表失败");
+            return -1;
         }
         int userId = user.getId();
         List<UserRoleRelation> userRoleRelations = roleFactory.convertUserRoleRelation(userId, userDO.getRoles());

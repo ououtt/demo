@@ -1,8 +1,6 @@
 package com.example.demo.domain.entity;
 
-import com.example.demo.constant.enums.SexEnum;
 import com.example.demo.domain.value.RoleValue;
-import com.example.demo.repository.orm.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +15,8 @@ import java.util.List;
  **/
 @Data
 public class UserDO implements UserDetails {
+
+    private static final long serialVersionUID = 3627092793498700715L;
 
     private Integer id;
 
