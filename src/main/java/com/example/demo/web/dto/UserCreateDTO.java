@@ -29,6 +29,8 @@ public class UserCreateDTO {
 
     private String address;
 
+    private String kaptcha;
+
     public boolean check() {
         if (StringUtils.isBlank(username)) {
             return false;
@@ -37,6 +39,9 @@ public class UserCreateDTO {
             return false;
         }
         if (SexEnum.parseId(sex) == null) {
+            return false;
+        }
+        if (StringUtils.isBlank(kaptcha)) {
             return false;
         }
         return true;

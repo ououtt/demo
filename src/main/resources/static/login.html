@@ -40,7 +40,6 @@
         </div>
         <div class="layui-form-mid layui-word-aux">请务必填写密码</div>
     </div>
-    <img style="width:47%;display:inline;" id="kaptcha" src="/captcha-image" title="点击更换" onclick="refreshCaptcha();"/>
     <div class="layui-form-item">
         <button class="layui-btn" lay-submit="" lay-filter="login">登陆</button>
     </div>
@@ -51,28 +50,13 @@
 <script>
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
-            ,layer = layui.layer
             ;
-
 
         //自定义验证规则
         form.verify({
-            pass: [/^(.+){8,12}$/, '密码必须大于']
+            pass: [/^(.+){8,}$/, '密码必须大于8位']
         });
-
-        //监听提交
-        form.on('submit(login)', function(data){
-            layer.alert(JSON.stringify(data.field));
-            return true;
-        });
-
-
-
     });
-
-    function refreshCaptcha() {
-        $("#kaptcha").attr("src","/captcha-image?t=" + Math.random());
-    }
 </script>
 
 </body>

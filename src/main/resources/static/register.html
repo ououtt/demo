@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
+
 <body>
 
 <blockquote class="layui-elem-quote layui-text">
@@ -59,6 +60,14 @@
             <input type="radio" name="sex" value="2" title="女">
         </div>
     </div>
+    <img src="/captcha-image"  onclick = "this.src='/captcha-image?v='+Math.random()" title="点击更换"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="kaptcha" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
     <div class="layui-form-item">
         <button class="layui-btn" lay-submit="" lay-filter="register">注册</button>
     </div>
@@ -73,16 +82,14 @@
 
         //自定义验证规则
         form.verify({
-            pass: [/^(.+){8,12}$/, '密码必须大于']
+            pass: [/^(.+){8,}$/, '密码必须大于8位']
         });
-
-        //监听提交
-        form.on('submit(register)', function(data){
-            layer.alert(JSON.stringify(data.field));
-            return true;
-        });
-
-
+        //
+        // //监听提交
+        // form.on('submit(register)', function(data){
+        //     layer.alert(JSON.stringify(data.field));
+        //     return true;
+        // });
     });
 </script>
 

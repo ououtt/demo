@@ -1,5 +1,6 @@
 package com.example.demo.web;
 
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,6 +13,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +32,7 @@ public class CaptchaController {
     private StringRedisTemplate stringRedisTemplate;
 
     @RequestMapping(value = "/captcha-image")
-    public ModelAndView getKaptchaImage(HttpServletResponse response) throws Exception {
+    public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setDateHeader("Expires", 0);
         response.setHeader("Cache-Control",
                 "no-store, no-cache, must-revalidate");
@@ -42,14 +44,11 @@ public class CaptchaController {
         System.out.println("capText: " + capText);
 
         try {
-            String uuid = UUID.randomUUID().toString().trim();
-            stringRedisTemplate.opsForValue().set(uuid, capText, 60 * 5, TimeUnit.SECONDS);
-            Cookie cookie = new Cookie("captchaCode", uuid);
-            response.addCookie(cookie);
+            HttpSession session = request.getSession();
+            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         BufferedImage bi = captchaProducer.createImage(capText);
         ServletOutputStream out = response.getOutputStream();
