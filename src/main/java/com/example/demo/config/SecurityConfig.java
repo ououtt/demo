@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login.html")
                     .loginProcessingUrl("/login")
-                    .defaultSuccessUrl("/index.html")
+                    .defaultSuccessUrl("/blogs.html")
                     .permitAll()
 //                .and()
 //                    .rememberMe()
@@ -57,7 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .key("asd")
                 .and()
                     .logout()
-                    .logoutUrl("index.html")
+                    .deleteCookies("JSESSIONID")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/index.html")
                     .permitAll();
         http.csrf().disable();
     }
