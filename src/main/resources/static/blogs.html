@@ -11,7 +11,7 @@
 </head>
 <body onload="loadXMLDoc()">
 <blockquote class="layui-elem-quote layui-text">
-    <a href="/logout" target="_blank">登出</a>
+    <a href="/logout" >登出</a>
     <a href="/blogSave.html" target="_blank">写博客</a>
 </blockquote>
 
@@ -72,7 +72,7 @@
                         "        <i class=\"layui-icon layui-timeline-axis\"></i>\n" +
                         "        <div class=\"layui-timeline-content layui-text\">\n" +
                         "            <div class=\"layui-timeline-title\">" +
-                        "<a href='blogSave.html?id=" + arry[i]["id"] + "'>" + arry[i]["title"] +" </a>" + getNowFormatDate(arry[i]["create"]) +
+                        "<a target=\"_blank\" href='blogSave.html?id=" + arry[i]["id"] + "'>" + arry[i]["title"] +" </a>" + getNowFormatDate(arry[i]["create"]) +
                         "</div>\n" +
                         "        </div>\n" +
                         "    </li>";

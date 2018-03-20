@@ -1,6 +1,5 @@
 package com.example.demo.web;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.domain.entity.BlogDO;
 import com.example.demo.domain.value.BlogItemValue;
@@ -61,7 +60,6 @@ public class BlogController {
         UserDO userDO = (UserDO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer userId = userDO.getId();
         List<BlogItemValue> blogItemValues = blogService.selectBlogItemValuesByUserId(userId);
-        System.out.println(blogItemValues.toString());
         return ListResult.successResult(blogItemValues);
     }
 

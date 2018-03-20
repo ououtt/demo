@@ -41,7 +41,6 @@ public class CaptchaController {
         response.setContentType("image/jpeg");
 
         String capText = captchaProducer.createText();
-        System.out.println("capText: " + capText);
 
         try {
             HttpSession session = request.getSession();

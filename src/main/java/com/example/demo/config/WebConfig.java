@@ -1,7 +1,10 @@
 package com.example.demo.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -11,16 +14,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/").addResourceLocations("classpath:/static/index.html");
-//        super.addResourceHandlers(registry);
-    }
-
-
 //    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addRedirectViewController("/register", "/register.html");
-//        super.addViewControllers(registry);
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/").addResourceLocations("classpath:/static/blogs.html");
+////        super.addResourceHandlers(registry);
 //    }
+
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/", "/blogs.html");
+        super.addViewControllers(registry);
+    }
 }

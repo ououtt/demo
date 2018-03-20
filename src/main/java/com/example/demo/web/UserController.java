@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * @author guzemin@songxiaocai.com
  * @create 2018-03-17 13:53
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/user")
 public class UserController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,7 +37,7 @@ public class UserController {
     public String register(UserCreateDTO userCreateDTO, HttpServletRequest request) {
         if (userCreateDTO == null || !userCreateDTO.check()) {
             logger.error("register 入参失败");
-            return "/register.html";
+            return "入参检验错误";
         }
         //验证码校验
         HttpSession session = request.getSession();
@@ -45,7 +45,7 @@ public class UserController {
         String captcha = userCreateDTO.getKaptcha();
         if (!captcha.equalsIgnoreCase(realCaptcha)) {
             logger.error("验证码错误:{},{}", realCaptcha, captcha);
-            return "/register.html";
+            return "验证码错误";
         }
 
 //        try {
@@ -56,7 +56,7 @@ public class UserController {
         UserDO userDO = wrapUserCreateDTO(userCreateDTO);
         int userId = userService.createCommonUser(userDO);
         userDO.setId(userId);
-        return "/blogs.html";
+        return "请登录";
     }
 
 

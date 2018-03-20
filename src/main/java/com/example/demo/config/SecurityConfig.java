@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/layui/**").permitAll()
-                .antMatchers("/", "/index.html").permitAll()
+                .antMatchers("/").permitAll()
                 .antMatchers("/user/register", "/register.html").permitAll()
                 .antMatchers("/captcha-image").permitAll()
                 .anyRequest().authenticated()
@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID")
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
-                    .logoutSuccessUrl("/index.html")
+                    .logoutSuccessUrl("/login.html")
                     .permitAll();
         http.csrf().disable();
     }
