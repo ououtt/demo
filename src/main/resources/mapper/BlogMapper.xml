@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.mapper.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.repository.orm.Blog" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP" />
+    <result column="text" property="text" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <resultMap id="BlogItemValue" type="com.example.demo.domain.value.BlogItemValue">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gmt_create" property="create" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="selectBlogItemValuesByUserId" parameterType="java.lang.Integer" resultMap="BlogItemValue">
+    SELECT id, title, gmt_create
+    FROM blog
+    WHERE state=1 AND user_id=#{userId,jdbcType=INTEGER}
+    ORDER BY gmt_create DESC
+  </select>
+</mapper>

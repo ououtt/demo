@@ -3,18 +3,21 @@
 <head>
     <meta charset="utf-8">
     <title>博客</title>
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body style="padding: 30px">
 
 
 
+
     <div class="first">
-        <textarea name="textarea" id="text-input" oninput="this.editor.update()" rows="60">写博客</textarea>
+        <textarea name="text" oninput="this.editor.update()" rows="60">写博客</textarea>
     </div>
     <div class="second">
         <div id="preview"></div>
     </div>
+
 
 <script src="/markdown/markdown.js"></script>
 <script>
@@ -45,7 +48,7 @@
 </style>
 
     <style>
-        textarea
+        text
         {
             width:100%;
         }

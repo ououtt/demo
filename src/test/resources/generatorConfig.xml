@@ -27,9 +27,9 @@
 
         <javaClientGenerator targetPackage="com.example.demo.repository.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
 
-        <table tableName="user" domainObjectName="User">
+        <!--<table tableName="user" domainObjectName="User">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        </table>-->
 
         <!--<table tableName="role" domainObjectName="Role">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
@@ -38,6 +38,10 @@
         <!--<table tableName="user_role_relation" domainObjectName="UserRoleRelation">-->
             <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
+
+        <table tableName="blog" domainObjectName="Blog">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>
