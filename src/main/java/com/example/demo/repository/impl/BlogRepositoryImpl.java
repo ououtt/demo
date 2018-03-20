@@ -70,7 +70,7 @@ public class BlogRepositoryImpl implements BlogRepository {
         criteria.andEqualTo("userId", userId);
         criteria.andEqualTo("id", blogSaveDTO.getId());
         criteria.andEqualTo("state", Constant.VALID);
-        int updateCount = blogMapper.updateByCondition(wrap(blogSaveDTO), condition);
+        int updateCount = blogMapper.updateByConditionSelective(wrap(blogSaveDTO), condition);
         if (updateCount != 1) {
             return false;
         }

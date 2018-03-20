@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-<body>
+<body onload="isCreate()">
 
 <form role="form" action="/blog/save" method="post">
 <div class="form-group">
     <div class="col-sm-10">
-        <input type="hidden" class="form-control" id="id" value="">
+        <input type="hidden" class="form-control" id="id" name="id">
     </div>
 </div>
     <div class="form-group">
@@ -40,14 +40,59 @@
     </div>
 </form>
 
+<script type="text/javascript">
+    function loadXMLDoc(id)
+    {
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                // document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+                var result = xmlhttp.responseText;
 
+                var obj = JSON.parse(result);
+                var data = obj.data;
 
-<!--<div>-->
-    <!--<div class="first">-->
-    <!--</div>-->
-    <!--<div class="second">-->
-    <!--</div>-->
-<!--</div>-->
+                document.getElementById('id').value=id;
+                document.getElementById("title").value=data["title"];
+                document.getElementById("text").innerText=data["text"];
+            }
+        }
+        xmlhttp.open("GET","/blog/"+id,true);
+        xmlhttp.send();
+    }
+</script>
+
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+</script>
+
+<script>
+    function isCreate() {
+        var id = getQueryVariable("id");
+        if (id != false) {
+            loadXMLDoc(id);
+        }
+    }
+</script>
 
 
 <script src="/markdown/markdown.js"></script>
@@ -63,20 +108,7 @@
     new Editor($("text"), $("preview"));
 </script>
 
-<!--<style>-->
-    <!--.first {-->
-        <!--width: 50%;-->
-        <!--float:left;-->
-        <!--border: 1px solid #3B6273;-->
-        <!--margin-right:-1px;-->
-    <!--}-->
-    <!--.second {-->
-        <!--width: 50%;-->
-        <!--float:left;-->
-        <!--border: 1px solid #3B6273;-->
-        <!--background: #C9C5C5;-->
-    <!--}-->
-<!--</style>-->
+
 
     <style>
         text
