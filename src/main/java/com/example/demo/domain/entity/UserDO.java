@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class UserDO implements UserDetails {
 
     private Integer state;
 
-    private Date create;
+    private Instant create;
 
     private Integer valid;
 

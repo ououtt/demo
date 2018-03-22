@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,7 +98,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private void wrapCreate(User user) {
-        Date now = new Date();
+        Instant now = Instant.now();
         user.setGmtUpdate(now);
         user.setGmtCreate(now);
         user.setState(Constant.VALID);
