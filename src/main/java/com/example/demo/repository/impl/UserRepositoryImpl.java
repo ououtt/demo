@@ -98,6 +98,15 @@ public class UserRepositoryImpl implements UserRepository {
         return userDO;
     }
 
+    @Override
+    public int countUserByUsername(String username) {
+        Condition condition = new Condition(User.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andEqualTo("state", Constant.VALID);
+        criteria.andEqualTo("username", username);
+        return userMapper.selectCountByCondition(condition);
+    }
+
     private void wrapCreate(User user) {
         LocalDateTime now = LocalDateTime.now();
         user.setGmtUpdate(now);

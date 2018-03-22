@@ -10,4 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
 
     int createCommonUser(UserDO userDO);
+
+    int countByUsername(String username);
 }

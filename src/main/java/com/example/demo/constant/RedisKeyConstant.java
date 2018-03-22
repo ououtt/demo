@@ -6,6 +6,6 @@ package com.example.demo.constant;
  **/
 public class RedisKeyConstant {
 
-    public static final String REGITER_KEY = "register_user_";
+    public static final String REGITER = "register_user_";
 
 }
