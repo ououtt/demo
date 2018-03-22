@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +42,7 @@ public class UserDO implements UserDetails {
 
     private Integer state;
 
-    private Instant create;
+    private LocalDateTime create;
 
     private Integer valid;
 

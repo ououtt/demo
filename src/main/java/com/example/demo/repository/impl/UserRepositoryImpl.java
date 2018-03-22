@@ -23,6 +23,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +99,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private void wrapCreate(User user) {
-        Instant now = Instant.now();
+        LocalDateTime now = LocalDateTime.now();
         user.setGmtUpdate(now);
         user.setGmtCreate(now);
         user.setState(Constant.VALID);

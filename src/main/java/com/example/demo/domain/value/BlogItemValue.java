@@ -3,6 +3,7 @@ package com.example.demo.domain.value;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -17,5 +18,5 @@ public class BlogItemValue implements Serializable {
 
     private String title;
 
-    private Date create;
+    private LocalDateTime create;
 }

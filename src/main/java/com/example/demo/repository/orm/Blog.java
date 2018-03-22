@@ -1,6 +1,7 @@
 package com.example.demo.repository.orm;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -29,13 +30,13 @@ public class Blog {
      * 创建时间
      */
     @Column(name = "gmt_create")
-    private Instant gmtCreate;
+    private LocalDateTime gmtCreate;
 
     /**
      * 修改时间
      */
     @Column(name = "gmt_update")
-    private Instant gmtUpdate;
+    private LocalDateTime gmtUpdate;
 
     /**
      * 内容
@@ -115,7 +116,7 @@ public class Blog {
      *
      * @return gmt_create - 创建时间
      */
-    public Instant getGmtCreate() {
+    public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
 
@@ -124,7 +125,7 @@ public class Blog {
      *
      * @param gmtCreate 创建时间
      */
-    public void setGmtCreate(Instant gmtCreate) {
+    public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
@@ -133,7 +134,7 @@ public class Blog {
      *
      * @return gmt_update - 修改时间
      */
-    public Instant getGmtUpdate() {
+    public LocalDateTime getGmtUpdate() {
         return gmtUpdate;
     }
 
@@ -142,7 +143,7 @@ public class Blog {
      *
      * @param gmtUpdate 修改时间
      */
-    public void setGmtUpdate(Instant gmtUpdate) {
+    public void setGmtUpdate(LocalDateTime gmtUpdate) {
         this.gmtUpdate = gmtUpdate;
     }
 

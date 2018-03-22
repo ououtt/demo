@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -22,11 +23,11 @@ public class BlogRepositoryTest extends DemoApplicationTests {
         blog.setTitle("rrrr");
         blog.setUserId(333);
         blog.setState(1);
-        Instant now = Instant.now();
+        LocalDateTime now = LocalDateTime.now();
         blog.setGmtCreate(now);
         blog.setGmtUpdate(now);
         int i = blogRepository.createBlog(blog);
-        Assert.assertEquals(1, i);
+        Assert.assertEquals(3, i);
     }
 
     @Test
