@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,27 +79,51 @@ public class UserRepositoryImpl implements UserRepository {
         criteria.andEqualTo("state", Constant.VALID);
         criteria.andEqualTo("username", username);
         List<User> users = userMapper.selectByCondition(userCondition);
+        if (CollectionUtils.isEmpty(users)) {
+            logger.error("用户名不存在,username:{}", username);
+            return null;
+        }
+        if (users.size() > 1) {
+            logger.error("存在多名相同用户名的用户,username:{}", username);
+        }
         User user = users.get(0);
+        UserDO userDO = userFactory.convertToDO(user);
 
-        Condition condition1 = new Condition(UserRoleRelation.class);
-        Example.Criteria criteria1 = condition1.createCriteria();
+        Condition userRoleCondition = new Condition(UserRoleRelation.class);
+        Example.Criteria criteria1 = userRoleCondition.createCriteria();
         criteria1.andEqualTo("userId", user.getId());
-        List<UserRoleRelation> userRoleRelations = userRoleRelationMapper.selectByCondition(condition1);
+        List<UserRoleRelation> userRoleRelations = userRoleRelationMapper.selectByCondition(userRoleCondition);
+        if (CollectionUtils.isEmpty(userRoleRelations)) {
+            logger.error("该用户没有关联角色username:{}", username);
+            return userDO;
+        }
 
         List<Integer> roleIds = userRoleRelations.stream().map(UserRoleRelation::getRoleId).collect(Collectors.toList());
-        Condition condition2 = new Condition(Role.class);
-        Example.Criteria criteria2 = condition2.createCriteria();
+        Condition roleCondition = new Condition(Role.class);
+        Example.Criteria criteria2 = roleCondition.createCriteria();
         criteria2.andEqualTo("state", Constant.VALID);
         criteria2.andIn("id", roleIds);
-        List<Role> roles = roleMapper.selectByCondition(condition2);
+        List<Role> roles = roleMapper.selectByCondition(roleCondition);
 
-        UserDO userDO = userFactory.convertToDO(user);
+        if (CollectionUtils.isEmpty(roles) || roles.size() != roleIds.size()) {
+            logger.error("角色表数据异常roleIds:{}", roleIds.toString());
+        }
+
         userDO.setRoles(roleFactory.convertRoleList(roles));
         return userDO;
     }
 
+    @Override
+    public int countUserByUsername(String username) {
+        Condition condition = new Condition(User.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andEqualTo("state", Constant.VALID);
+        criteria.andEqualTo("username", username);
+        return userMapper.selectCountByCondition(condition);
+    }
+
     private void wrapCreate(User user) {
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
         user.setGmtUpdate(now);
         user.setGmtCreate(now);
         user.setState(Constant.VALID);

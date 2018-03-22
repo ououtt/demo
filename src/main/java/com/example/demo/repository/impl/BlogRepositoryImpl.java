@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +88,7 @@ public class BlogRepositoryImpl implements BlogRepository {
     }
 
     private void wrap(Blog blog) {
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
         blog.setGmtCreate(now);
         blog.setGmtUpdate(now);
     }

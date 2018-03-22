@@ -3,6 +3,8 @@ package com.example.demo.domain.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -19,5 +21,5 @@ public class BlogDO implements Serializable {
 
     private String text;
 
-    private Date create;
+    private LocalDateTime create;
 }

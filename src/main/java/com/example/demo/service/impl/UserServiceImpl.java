@@ -59,5 +59,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.createUser(userDO);
     }
 
+    @Override
+    public int countByUsername(String username) {
+        return userRepository.countUserByUsername(username);
+    }
+
 
 }

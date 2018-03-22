@@ -1,5 +1,6 @@
 package com.example.demo.web;
 
+import com.example.demo.constant.RedisKeyConstant;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.service.UserService;
 import com.example.demo.web.dto.UserCreateDTO;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,10 +36,10 @@ public class UserController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(UserCreateDTO userCreateDTO, HttpServletRequest request) {
+    public Result<Boolean> register(UserCreateDTO userCreateDTO, HttpServletRequest request) {
         if (userCreateDTO == null || !userCreateDTO.check()) {
             logger.error("register 入参失败");
-            return "入参检验错误";
+            return Result.errorResult("入参检验错误");
         }
         //验证码校验
         HttpSession session = request.getSession();
@@ -45,18 +47,31 @@ public class UserController {
         String captcha = userCreateDTO.getKaptcha();
         if (!captcha.equalsIgnoreCase(realCaptcha)) {
             logger.error("验证码错误:{},{}", realCaptcha, captcha);
-            return "验证码错误";
+            return Result.errorResult("验证码错误");
         }
 
-//        try {
-//            String registerKey = RedisKeyConstant.REGITER_KEY + userCreateDTO.getUsername();
-//            Long registerCount = stringRedisTemplate.opsForValue().increment(registerKey, 1);
-//        }
+        String username = userCreateDTO.getUsername();
+        String registerKey = RedisKeyConstant.REGITER + username;
+        try {
+            Long registerCount = stringRedisTemplate.opsForValue().increment(registerKey, 1);
+            if (registerCount != null && registerCount > 1) {
+                logger.error("redis key已存在:{}", registerKey);
+                return Result.errorResult("请勿重复提交");
+            }
 
-        UserDO userDO = wrapUserCreateDTO(userCreateDTO);
-        int userId = userService.createCommonUser(userDO);
-        userDO.setId(userId);
-        return "请登录";
+            //查找当前是否有同名用户已存在
+            int count = userService.countByUsername(username);
+            if (count > 0) {
+                logger.error("username:{},count:{}", username, count);
+                return Result.errorResult("用户名已存在");
+            }
+            UserDO userDO = wrapUserCreateDTO(userCreateDTO);
+            int userId = userService.createCommonUser(userDO);
+            userDO.setId(userId);
+            return Result.successResult(Boolean.TRUE);
+        } finally {
+            stringRedisTemplate.delete(registerKey);
+        }
     }
 
 

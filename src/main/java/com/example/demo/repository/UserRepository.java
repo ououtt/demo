@@ -12,4 +12,6 @@ public interface UserRepository {
 
     UserDO findUserDOByUsername(String username);
 
+    int countUserByUsername(String username);
+
 }
