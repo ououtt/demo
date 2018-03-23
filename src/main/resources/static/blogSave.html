@@ -67,8 +67,9 @@
                 document.getElementById('id').value=id;
                 document.getElementById("title").value=data["title"];
                 document.getElementById("text").innerText=data["text"];
+                document.getElementById("preview").innerHTML=markdown.toHTML(data["text"]);
             }
-        }
+        };
         xmlhttp.open("GET","/blog/"+id,true);
         xmlhttp.send();
     }
