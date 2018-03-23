@@ -70,7 +70,7 @@ public class User {
      * 修改时间
      */
     @Column(name = "gmt_update")
-    private LocalDateTime gmtUpdate;
+    private LocalDateTime gmtUpdate = LocalDateTime.now();
 
     /**
      * 是否验证
