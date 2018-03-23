@@ -36,7 +36,7 @@ public class Blog {
      * 修改时间
      */
     @Column(name = "gmt_update")
-    private LocalDateTime gmtUpdate;
+    private LocalDateTime gmtUpdate = LocalDateTime.now();
 
     /**
      * 内容
