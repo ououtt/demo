@@ -18,6 +18,9 @@ public interface BlogService {
 
     Blog showBlogDetail(Integer blogId, Integer userId);
 
+    Blog showBlogDetail(Integer blogId);
+
+
     boolean updateBlog(BlogSaveDTO blogSaveDTO, Integer userId);
 
 }

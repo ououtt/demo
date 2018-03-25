@@ -55,19 +55,25 @@ public class BlogController {
         return Result.successResult(true);
     }
 
+    @RequestMapping(value = "/blogs.do/{id}", method = RequestMethod.GET)
+    public ListResult<BlogItemValue> blogs(@PathVariable("id")Integer id) {
+        List<BlogItemValue> blogItemValues = blogService.selectBlogItemValuesByUserId(id);
+        return ListResult.successResult(blogItemValues);
+
+    }
+
     @RequestMapping(value = "/blogs.do", method = RequestMethod.GET)
     public ListResult<BlogItemValue> blogs() {
         UserDO userDO = (UserDO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Integer userId = userDO.getId();
         List<BlogItemValue> blogItemValues = blogService.selectBlogItemValuesByUserId(userId);
         return ListResult.successResult(blogItemValues);
+
     }
 
     @RequestMapping(value = "/blog/{blogId}", method = RequestMethod.GET)
     public Result<BlogDO> blogDetail(@PathVariable("blogId") Integer blogId) {
-        UserDO userDO = (UserDO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer userId = userDO.getId();
-        Blog blog = blogService.showBlogDetail(blogId, userId);
+        Blog blog = blogService.showBlogDetail(blogId);
         if (blog == null) {
             return Result.errorResult("查看博客失败");
         }
