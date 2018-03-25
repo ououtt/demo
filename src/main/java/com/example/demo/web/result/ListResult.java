@@ -16,6 +16,17 @@ public class ListResult <T extends Serializable> implements Serializable {
 
     private String errorMessage;
 
+    //为了layui的表格组件加的，自己不会写前端啊
+    private Integer code = 0;
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
     public List<T> getData() {
         return data;
     }

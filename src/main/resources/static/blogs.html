@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body onload="loadXMLDoc()">
+<body onload="isOwner()">
 <blockquote class="layui-elem-quote layui-text">
     <a href="/logout" >登出</a>
     <a href="/blogSave.html" target="_blank">写博客</a>
@@ -46,7 +46,7 @@
 <script src="/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script type="text/javascript">
-    function loadXMLDoc()
+    function loadXMLDoc(id)
     {
         var xmlhttp;
         if (window.XMLHttpRequest)
@@ -79,8 +79,12 @@
                 }
                 document.getElementById("li").innerHTML=html;
             }
+        };
+        if (id != false) {
+            xmlhttp.open("GET","/blogs.do/"+id,true);
+        } else {
+            xmlhttp.open("GET","/blogs.do",true);
         }
-        xmlhttp.open("GET","/blogs.do",true);
         xmlhttp.send();
     }
 </script>
@@ -104,6 +108,26 @@
             + " " + date.getHours() + seperator2 + minuts
             + seperator2 + secons;
         return currentdate;
+    }
+</script>
+
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+</script>
+
+<script>
+    function isOwner() {
+        var id = getQueryVariable("id");
+        loadXMLDoc(id);
     }
 </script>
 
