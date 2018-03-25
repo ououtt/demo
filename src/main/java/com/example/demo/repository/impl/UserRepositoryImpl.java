@@ -122,6 +122,11 @@ public class UserRepositoryImpl implements UserRepository {
         return userMapper.selectCountByCondition(condition);
     }
 
+    @Override
+    public List<User> selectAll() {
+        return userMapper.selectAll();
+    }
+
     private void wrapCreate(User user) {
         LocalDateTime now = LocalDateTime.now();
         user.setGmtUpdate(now);

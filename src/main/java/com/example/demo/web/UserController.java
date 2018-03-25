@@ -4,6 +4,8 @@ import com.example.demo.constant.RedisKeyConstant;
 import com.example.demo.domain.entity.UserDO;
 import com.example.demo.service.UserService;
 import com.example.demo.web.dto.UserCreateDTO;
+import com.example.demo.web.dto.UserDTO;
+import com.example.demo.web.result.ListResult;
 import com.example.demo.web.result.Result;
 import com.google.code.kaptcha.Constants;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author guzemin@songxiaocai.com
@@ -72,6 +75,11 @@ public class UserController {
         } finally {
             stringRedisTemplate.delete(registerKey);
         }
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ListResult<UserDTO> users() {
+        return ListResult.successResult(userService.selectAll());
     }
 
 

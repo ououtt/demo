@@ -1,6 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.entity.UserDO;
+import com.example.demo.repository.orm.User;
+
+import java.util.List;
 
 /**
  * @author guzemin@songxiaocai.com
@@ -13,5 +16,7 @@ public interface UserRepository {
     UserDO findUserDOByUsername(String username);
 
     int countUserByUsername(String username);
+
+    List<User> selectAll();
 
 }

@@ -52,6 +52,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog showBlogDetail(Integer blogId) {
+        return blogRepository.selectById(blogId);
+    }
+
+    @Override
     public boolean updateBlog(BlogSaveDTO blogSaveDTO, Integer userId) {
         return blogRepository.updateBlog(blogSaveDTO, userId);
     }
